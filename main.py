@@ -7,7 +7,7 @@ def main(page: Page):
 
 
     base_container = Container(
-        bgcolor=colors.BLUE,
+        bgcolor=colors.GREEN,
         content=HeaderBar(),
     )
     base_container.alignment = alignment.center

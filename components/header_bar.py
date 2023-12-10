@@ -30,11 +30,15 @@ class ServerDropdown(UserControl):
     
     def build(self):
         return Container(
-            margin=margin.only(left=100),
-            bgcolor=colors.PINK,
+            margin=margin.only(left=110),
+            bgcolor=colors.BLUE,
             content=Dropdown(
+                bgcolor=colors.RED,
+                text_size=16,
+                border="NONE",
+                border_radius=35,
                 width=80,
-                height=40,
+                height=50,
                 options=[
                     dropdown.Option("EUW"),
                     dropdown.Option("NA"),
