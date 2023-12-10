@@ -22,6 +22,7 @@ class Logo(UserControl):
                 value="WHGG",
                 color=colors.BLACK,
                 size=60,
+                weight=FontWeight.BOLD
             )
         )
 
