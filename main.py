@@ -1,74 +1,34 @@
 from flet import *
 
+from components.header_bar import HeaderBar
 
 def main(page: Page):
     BG = '#17171a'
-    
-    first_page_contents = Container(
-        content=Column(
-            controls=[
-                Row(
-                    alignment='spaceBetween',
-                    controls=[
-                        Container(
-                            content=Icon(
-                                icons.MENU
-                            )
-                        ),
-                        Container(
-                            content=Dropdown(
-                                width=80,
-                                height=40,
-                                label="Region",
-                                options=[
-                                    dropdown.Option("EUW"),
-                                    dropdown.Option("EUNE"),
-                                    dropdown.Option("NA"),
-                                ]
-                            )
-                        )
-                    ]
-                )
-            ]
-        )
+
+
+    base_container = Container(
+        bgcolor=colors.BLUE,
+        content=HeaderBar(),
     )
+    base_container.alignment = alignment.center
     
-    page_1 = Container()
-    page_2 = Row(
-        controls=[
-            Container(
-                width=370,
-                height=850,
-                border_radius=35,
-                padding=padding.only(
-                    top=50,
-                    left=20,
-                    right=20,
-                    bottom=5,
-                ),
-                content=Column(
-                    controls=[
-                        first_page_contents
-                    ]
-                )
-            )
+    navigation_bar = NavigationBar(
+        height=90,
+        destinations=[
+            
+            NavigationDestination(icon=icons.HOME, label="Inicio"),
+            NavigationDestination(icon=icons.SEARCH, label="Buscar"),
+            NavigationDestination(icon=icons.SETTINGS, label="Configuración"),
+            NavigationDestination(icon=icons.PERSON, label="Perfil")
         ]
     )
-    container = Container(
-        width=400, 
-        height=850,
-        border_radius=35,
-        
-        content=Stack(
-            controls=[
-                page_1,
-                page_2,
-            ],
-        )
-    )
+    content = base_container
     
     # Page settings
-    page.bgcolor = BG
-    page.add(container)
+    
+    page.bgcolor = colors.YELLOW
+    page.navigation_bar = navigation_bar
+    page.add(SafeArea(content))
 
 app(target=main)
+
