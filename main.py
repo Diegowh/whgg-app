@@ -1,6 +1,6 @@
 from flet import *
 
-from components.header_bar import HeaderBar
+from components.SearchPage.header_bar import HeaderBar
 
 def main(page: Page):
     BG = '#17171a'
@@ -25,7 +25,6 @@ def main(page: Page):
     content = base_container
     
     # Page settings
-    
     page.bgcolor = colors.YELLOW
     page.navigation_bar = navigation_bar
     page.add(SafeArea(content))

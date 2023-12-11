@@ -1,8 +1,6 @@
-from typing import Any, List, Optional, Union
 from flet import *
-from flet_core.control import Control, OptionalNumber
-from flet_core.ref import Ref
-from flet_core.types import AnimationValue, ClipBehavior, OffsetValue, ResponsiveNumber, RotateValue, ScaleValue
+
+from enum import Enum
 
 class HeaderBar(UserControl):
     def build(self) -> Row:
@@ -40,10 +38,28 @@ class ServerDropdown(UserControl):
                 border_radius=35,
                 width=80,
                 height=50,
+                hint_text="EUW",
                 options=[
-                    dropdown.Option("EUW"),
-                    dropdown.Option("NA"),
-                    dropdown.Option("RU"),
+                    dropdown.Option(Servers.EUW.value),
+                    dropdown.Option(Servers.NA.value),
+                    dropdown.Option(Servers.RU.value),
+                    dropdown.Option(Servers.EUNE.value),
+                    dropdown.Option(Servers.TR.value),
+                    dropdown.Option(Servers.BR.value),
+                    dropdown.Option(Servers.LAN.value),
+                    dropdown.Option(Servers.LAS.value),
+                    dropdown.Option(Servers.OCE.value),
                 ],
             )
         )
+        
+class Servers(Enum):
+    EUW = "EUW"
+    NA = "NA"
+    EUNE = "EUNE"
+    RU = "RU"
+    TR = "TR"
+    BR = "BR"
+    LAN = "LAN"
+    LAS = "LAS"
+    OCE = "OCE"
