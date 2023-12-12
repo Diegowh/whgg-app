@@ -33,7 +33,7 @@ class UserInput(UserControl):
         
     def build(self):
         return Container(
-            bgcolor=colors.GREY,
+            bgcolor="#363062",
             content=self.text_field
         )
 
