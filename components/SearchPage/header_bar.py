@@ -15,10 +15,10 @@ class HeaderBar(UserControl):
 class Logo(UserControl):
     def build(self):
         return Container(
-            bgcolor=colors.PINK,
+            bgcolor="#363062",
             content=Text(
                 value="WHGG",
-                color=colors.BLACK,
+                color="#F5E8C7",
                 size=60,
                 weight=FontWeight.BOLD
             )
@@ -29,11 +29,13 @@ class ServerDropdown(UserControl):
     
     def build(self):
         return Container(
-            margin=margin.only(left=110),
-            bgcolor=colors.BLUE,
+            margin=margin.only(left=100),
+            padding=padding.only(left=10),
+            border_radius=8,
+            bgcolor="#435585",
             content=Dropdown(
-                bgcolor=colors.RED,
                 text_size=16,
+                color="#818FB4",
                 border="NONE",
                 border_radius=35,
                 width=80,

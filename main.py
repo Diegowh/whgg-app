@@ -1,17 +1,26 @@
 from flet import *
 
 from components.SearchPage.header_bar import HeaderBar
+from components.SearchPage.search_bar import SearchBar
 
 def main(page: Page):
     BG = '#17171a'
 
 
-    base_container = Container(
-        bgcolor=colors.GREEN,
+    header_container = Container(
+        padding=padding.only(left=5, right=10),
+        bgcolor="#363062",
         content=HeaderBar(),
     )
-    base_container.alignment = alignment.center
+    header_container.alignment = alignment.center
     
+    search_bar_container = Container(
+        bgcolor="#363062",
+        content=SearchBar()
+    )
+    
+    
+    # Bottom navigation bar
     navigation_bar = NavigationBar(
         height=90,
         destinations=[
@@ -22,12 +31,10 @@ def main(page: Page):
             NavigationDestination(icon=icons.PERSON, label="Perfil")
         ]
     )
-    content = base_container
     
     # Page settings
-    page.bgcolor = colors.YELLOW
+    page.bgcolor = "#363062"
     page.navigation_bar = navigation_bar
-    page.add(SafeArea(content))
+    page.add(SafeArea(header_container), SafeArea(search_bar_container))
 
 app(target=main)
-
