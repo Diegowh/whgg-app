@@ -6,18 +6,28 @@ from components.SearchPage.search_bar import SearchBar
 def main(page: Page):
     BG = '#17171a'
 
-
+    
+    # Header bar
+    header_bar = HeaderBar()
+    
     header_container = Container(
         padding=padding.only(left=5, right=10),
         bgcolor="#363062",
-        content=HeaderBar(),
+        content=header_bar,
     )
+    # Dropdown
+    dropdown = header_bar.get_server_dropdown()
+    
+    
     header_container.alignment = alignment.center
     
+    # Search bar
+    search_bar = SearchBar(dropdown)
     search_bar_container = Container(
         bgcolor="#363062",
-        content=SearchBar()
+        content=search_bar
     )
+    text_field = search_bar.get_user_input()
     
     
     # Bottom navigation bar
@@ -31,7 +41,6 @@ def main(page: Page):
             NavigationDestination(icon=icons.PERSON, label="Perfil")
         ]
     )
-    
     # Page settings
     page.bgcolor = "#363062"
     page.navigation_bar = navigation_bar
