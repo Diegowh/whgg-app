@@ -26,10 +26,12 @@ class UserInput(UserControl):
         self.text_field = TextField(
             autocorrect=False,
             autofocus=False,
-            bgcolor=colors.WHITE,
-            label="Introduce nombre de invocador",
+            bgcolor="#435585",
+            label="Summoner name",
+            border=InputBorder.UNDERLINE,
             border_radius=10,
-            color=colors.BLACK,
+            border_color="#F5E8C7",
+            color=colors.WHITE,
         )
         
     def build(self):
