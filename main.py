@@ -7,7 +7,7 @@ class HomeView(ft.UserControl):
         page: ft.Page,
         route="/",
         icon=ft.icons.HOME,
-        route_to="/home",
+        route_to="/profile",
     ):
         super().__init__()
         
@@ -100,11 +100,58 @@ class HomeView(ft.UserControl):
         return self.controls
     
     
-    def routing(self):
-        time.sleep(1.9) # Para evitar la carga prematura de los controles
+    def routing(self, event):
+        time.sleep(0.3) # Para evitar la carga prematura de los controles
         self.page.go(self.route_to)
+        
+    def request(self, summoner_name, server):
+        pass
 
 
+class ProfileView(ft.UserControl):
+    def __init__(
+        self,
+        page: ft.Page,
+        route="/profile",
+        icon=ft.icons.HOME,
+        route_to="/",
+    ):
+        super().__init__()
+        
+        self.page = page
+        self.icon = icon
+        self.route_to = route_to
+
+        self.page.appbar = ft.AppBar(
+        title=ft.Text("Profile"),
+        bgcolor=ft.colors.BLUE,
+        )
+        
+        self.controls = [
+            ft.SafeArea(
+                minimum=5,
+                content=ft.Column(
+                    controls=[
+                        # ft.AppBar(
+                        #     title=ft.Text("Profile"),
+                        #     bgcolor=ft.colors.BLUE,
+                        # ),
+                        ft.Text(value="Profile", size=50),
+                        ft.ElevatedButton(text="Go home", on_click=self.routing),
+                    ]
+                )
+            )
+        ]
+
+    def build(self):
+        return self.controls
+    
+    
+    def routing(self, event):
+        # time.sleep(0.3) # Para evitar la carga prematura de los controles
+        self.page.go(self.route_to)
+        
+        
 def main(page: ft.Page):
     
     page.theme_mode = ft.ThemeMode.DARK
@@ -115,20 +162,36 @@ def main(page: ft.Page):
     page.theme = theme
     
     home = HomeView(page)
-    # profile = ProfileView(page)
+    profile = ProfileView(page)
     
-    # def change_route(route):
-    #     page.views.clear()
+    def route_change(e: ft.RouteChangeEvent) -> None:
+        page.views.clear()
         
-    #     if page.route == "/":
-    #         page.views.append(home)
+        page.views.append(
+            home,
+        )
         
-    #     if page.route == "/profile":
-    #         page.views.append(profile)
+        if page.route == "/home":
+            page.views.append(home)
+        
+        if page.route == "/profile":
+            page.views.append(profile)
             
-    #     page.update()
+        page.update()
+        
+    def view_pop(e: ft.ViewPopEvent) -> None:
+        page.views.pop()
+        top_view: ft.View = page.views[-1]
+        page.go(top_view.route)
     
-    page.add(home)
+    page.appbar = ft.AppBar(
+        title=ft.Text("Profile"),
+        bgcolor=ft.colors.BLUE,
+    ),
+    page.on_route_change = route_change
+    page.on_view_pop = view_pop
     
-
+    page.go(page.route)
+    
+    
 ft.app(target=main)
