@@ -10,6 +10,7 @@ class SearchBar(UserControl):
         
     def build(self):
         return Row(
+            alignment=MainAxisAlignment.SPACE_AROUND,
             controls=[
                 self.user_input,
                 SearchButton(self.user_input.get_text_field(), self.dropdown)
@@ -48,6 +49,7 @@ class SearchButton(UserControl):
         
     def button_clicked(self, e):
         print(f"Summoner name: {self.text_field.value}, Server: {self.server_dropdown.value}")
+        
     def build(self):
         return IconButton(
             icon=icons.SEARCH, on_click=self.button_clicked,

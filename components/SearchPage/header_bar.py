@@ -9,6 +9,7 @@ class HeaderBar(UserControl):
 
     def build(self) -> Row:
         return Row(
+            alignment=MainAxisAlignment.SPACE_BETWEEN,
             controls=[
                 Logo(),
                 self.server_dropdown,
@@ -58,7 +59,6 @@ class ServerDropdown(UserControl):
 
     def build(self):
         return Container(
-            margin=margin.only(left=100),
             padding=padding.only(left=10),
             border_radius=8,
             bgcolor="#435585",
