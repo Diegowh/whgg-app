@@ -24,6 +24,7 @@ def main(page: Page):
     # Search bar
     search_bar = SearchBar(dropdown)
     search_bar_container = Container(
+        margin=margin.only(top=30),
         bgcolor="#363062",
         content=search_bar
     )
@@ -36,9 +37,9 @@ def main(page: Page):
         destinations=[
             
             NavigationDestination(icon=icons.HOME, label="Inicio"),
-            NavigationDestination(icon=icons.SEARCH, label="Buscar"),
-            NavigationDestination(icon=icons.SETTINGS, label="Configuración"),
-            NavigationDestination(icon=icons.PERSON, label="Perfil")
+            NavigationDestination(icon=icons.PEOPLE, label="Campeones"),
+            NavigationDestination(icon=icons.FORMAT_LIST_BULLETED, label="Tier List"),
+            NavigationDestination(icon=icons.SETTINGS, label="Settings")
         ]
     )
     # Page settings
