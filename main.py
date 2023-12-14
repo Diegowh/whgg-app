@@ -15,6 +15,35 @@ class HomeView(ft.UserControl):
         self.icon = icon
         self.route_to = route_to
 
+        self.summoner_name_textfield = ft.TextField(
+            autocorrect=False,
+            autofocus=False,
+            label="Game Name + Tagline",
+            border=ft.InputBorder.UNDERLINE,
+            border_radius=10,
+        )
+        
+        self.server_dropdown = ft.Dropdown(
+            text_size=16,
+            color=ft.colors.WHITE,
+            border="NONE",
+            border_radius=35,
+            width=80,
+            height=50,
+            hint_text="EUW",
+            options=[
+                ft.dropdown.Option("EUW"),
+                ft.dropdown.Option("NA"),
+                ft.dropdown.Option("RU"),
+                ft.dropdown.Option("EUNE"),
+                ft.dropdown.Option("TR"),
+                ft.dropdown.Option("BR"),
+                ft.dropdown.Option("LAN"),
+                ft.dropdown.Option("LAS"),
+                ft.dropdown.Option("OCE"),
+            ],
+        )
+        
         self.controls = [
             ft.SafeArea(
                 minimum=5,
@@ -39,26 +68,7 @@ class HomeView(ft.UserControl):
                                     padding=ft.padding.only(left=10),
                                     border_radius=8,
                                     bgcolor="#e9665a",
-                                    content=ft.Dropdown(
-                                        text_size=16,
-                                        color=ft.colors.WHITE,
-                                        border="NONE",
-                                        border_radius=35,
-                                        width=80,
-                                        height=50,
-                                        hint_text="EUW",
-                                        options=[
-                                            ft.dropdown.Option("EUW"),
-                                            ft.dropdown.Option("NA"),
-                                            ft.dropdown.Option("RU"),
-                                            ft.dropdown.Option("EUNE"),
-                                            ft.dropdown.Option("TR"),
-                                            ft.dropdown.Option("BR"),
-                                            ft.dropdown.Option("LAN"),
-                                            ft.dropdown.Option("LAS"),
-                                            ft.dropdown.Option("OCE"),
-                                        ],
-                                    ),
+                                    content=self.server_dropdown,
                                 ),
                             ]
                         ),
@@ -74,14 +84,8 @@ class HomeView(ft.UserControl):
                             alignment=ft.MainAxisAlignment.SPACE_AROUND,
                             controls=[
                                 
-                                # Summoner name input
-                                ft.TextField(
-                                    autocorrect=False,
-                                    autofocus=False,
-                                    label="Summoner name",
-                                    border=ft.InputBorder.UNDERLINE,
-                                    border_radius=10,
-                                ),
+                                # Summoner name TextInput
+                                self.summoner_name_textfield,
                                 
                                 # Search button
                                 ft.IconButton(
@@ -99,13 +103,29 @@ class HomeView(ft.UserControl):
     def build(self):
         return self.controls
     
-    
     def routing(self, event):
         time.sleep(0.3) # Para evitar la carga prematura de los controles
-        self.page.go(self.route_to)
         
-    def request(self, summoner_name, server):
-        pass
+        self.request(
+            summoner_name=self.summoner_name_textfield.text,
+            server=self.server_dropdown.text,
+        )
+        self.page.go(self.route_to)
+    
+    def filter_tagline(self, sum_name):
+        
+        if "#" in sum_name:
+            game_name = sum_name.split("#")[0]
+            tagline = sum_name.split("#")[1]
+        
+        else:
+            game_name = sum_name
+            tagline = "EUW"
+        
+        # TODO Finalizar el método
+        
+    def request(self, summoner_name: str, server: str = "EUW"):
+        ...
 
 
 class ProfileView(ft.UserControl):
