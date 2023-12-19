@@ -188,18 +188,136 @@ class ProfileView(ft.UserControl):
         
         self.controls = [
             ft.SafeArea(
-                minimum=5,
                 content=ft.Column(
                     controls=[
                         # ft.AppBar(
                         #     title=ft.Text("Profile"),
                         #     bgcolor=ft.colors.BLUE,
                         # ),
-                        ft.Text(value="Profile", size=50),
-                        ft.Text(value=f"Summoner name: {self.response['summoner_data']['name']}"),
-                        ft.Text(value=f"Summoner level: {self.response['summoner_data']['summoner_level']}"),
-                        ft.Text(value=f"Soloq Rank: {self.response['ranked_stats_data_list'][0]['tier'] + '' + self.response['ranked_stats_data_list'][0]['rank'] if self.response['ranked_stats_data_list'][0]['queue_type'] == 'RANKED_SOLO_5x5' else response['ranked_stats_data_list'][1]['tier'] + '' + self.response['ranked_stats_data_list'][1]['rank']}"),
-                        ft.ElevatedButton(text="Go home", on_click=self.routing),
+                        
+                        # Header Container
+                        
+                        # Back button bar
+                        
+                        ft.Stack(
+                            [
+                                ft.ShaderMask(
+                                    ft.Image("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiddlesticks_3.jpg"),
+                                    blend_mode=ft.BlendMode.DST_IN,
+                                    shader=ft.LinearGradient(
+                                        begin=ft.alignment.center_right,
+                                        end=ft.alignment.center_left,
+                                        colors=[ft.colors.BLACK, ft.colors.TRANSPARENT],
+                                        stops=[0, 0.85],
+                                    ),
+                                ),
+                                # Baackground image
+
+                                
+                                # Header Column
+                                ft.Column(
+                                    controls=[
+                                        ft.Row(
+                                            alignment=ft.MainAxisAlignment.START,
+                                            controls=[
+                                                ft.Divider(),
+                                                
+                                                ft.IconButton(
+                                                    icon=ft.icons.ARROW_BACK_IOS,
+                                                ),
+                                            ],
+                                        ),
+                                        
+                                        # Empty space
+                                        ft.Divider(
+                                            height=10,
+                                            color="transparent",
+                                        ),
+                                        
+                                        # Profile header
+                                        ft.Row(
+                                            alignment=ft.MainAxisAlignment.START,
+                                            controls=[
+                                                
+                                                ft.Divider(),
+                                                
+                                                # Icon and Level
+                                                ft.Stack(
+                                                    controls=[
+                                                        
+                                                        # Icon
+                                                        ft.Image(
+                                                            src=f'https://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/6022.png', #TODO Hacerlo dinámico con f-strings
+                                                            width=80, 
+                                                            height=80,
+                                                            fit=ft.ImageFit.FILL,
+                                                            border_radius=100,
+                                                        ),
+                                                        
+                                                        # Level
+                                                        ft.Container(
+                                                            content=ft.Text("515"),
+                                                            border_radius=10,
+                                                            height=20,
+                                                            width=40,
+                                                            bgcolor="#333333",
+                                                            alignment=ft.alignment.center,
+                                                            right=20,
+                                                            bottom=0,
+                                                        ),
+                                                    ]
+                                                ),
+                                                
+                                                # Name and Tagline Column
+                                                ft.Column(
+                                                    controls=[
+                                                            
+                                                        # Name
+                                                        ft.Text(
+                                                            value="wallhack",
+                                                            size=30,
+                                                            weight=ft.FontWeight.BOLD,
+                                                        ),
+                                                        
+                                                        # Tagline
+                                                        ft.Text(
+                                                            value="#1312",
+                                                        ),
+                                                        
+                                                    ],
+                                                    
+                                                ),
+                                            ]
+                                        ),
+                                    ]
+                                )
+                            ],
+                        ),
+
+                        
+                        # Empty space
+                        ft.Divider(
+                            height=5,
+                            color="transparent",
+                        ),
+                        
+                        # Update Button
+                        ft.Container(
+                            content=ft.ElevatedButton(
+                                text="Update",
+                                color=ft.colors.WHITE,
+                                bgcolor="#5b99fc",
+                                style=ft.ButtonStyle(
+                                    side={
+                                        ft.MaterialState.PRESSED: ft.BorderSide(2, ft.colors.BLUE)
+                                    },
+                                    shape={
+                                        ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=5)
+                                    }
+                                )
+                            ),
+                            margin=ft.margin.only(left=10)
+                        )
                     ]
                 )
             )
@@ -223,7 +341,8 @@ def main(page: ft.Page):
     theme.page_transitions.macos = ft.PageTransitionTheme.NONE
     page.theme = theme
     
-    home = HomeView(page)
+    # home = HomeView(page)
+    home = ProfileView(page)
     
     def route_change(e: ft.RouteChangeEvent) -> None:
         page.views.clear()
@@ -258,4 +377,7 @@ def main(page: ft.Page):
     page.go(page.route)
     
     
-ft.app(target=main)
+ft.app(
+    target=main,
+    assets_dir="assets",
+)
