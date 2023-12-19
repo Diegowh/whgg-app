@@ -293,18 +293,12 @@ class ProfileView(ft.UserControl):
                                 )
                             ],
                         ),
-
-                        
-                        # Empty space
-                        ft.Divider(
-                            height=5,
-                            color="transparent",
-                        ),
                         
                         # Update Button
                         ft.Container(
                             content=ft.ElevatedButton(
                                 text="Update",
+                                width=150,
                                 color=ft.colors.WHITE,
                                 bgcolor="#5b99fc",
                                 style=ft.ButtonStyle(
