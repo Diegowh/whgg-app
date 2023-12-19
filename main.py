@@ -559,12 +559,6 @@ class MatchCard(ft.UserControl):
             ft.Column(
                 controls=[
                     
-                    # Espacio vacío
-                    ft.Divider(
-                        height=10,
-                        color="3d3d3d",
-                    ),
-                    
                     # Match Card
                     ft.Row(
                         alignment=ft.MainAxisAlignment.START,
@@ -696,8 +690,10 @@ def main(page: ft.Page):
     theme.page_transitions.ios = ft.PageTransitionTheme.NONE
     theme.page_transitions.macos = ft.PageTransitionTheme.NONE
     page.theme = theme
-    page.window_resizable = True
+    page.window_resizable = False
     
+    page.window_height = 840
+    page.window_width = 410
     # home = HomeView(page)
     home = ProfileView(page)
     
