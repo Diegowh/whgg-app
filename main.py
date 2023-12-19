@@ -188,6 +188,7 @@ class ProfileView(ft.UserControl):
         
         self.controls = [
             ft.SafeArea(
+                minimum=5,
                 content=ft.Column(
                     controls=[
                         # ft.AppBar(
@@ -201,6 +202,7 @@ class ProfileView(ft.UserControl):
                         
                         ft.Stack(
                             [
+                                # Baackground image
                                 ft.ShaderMask(
                                     ft.Image("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiddlesticks_3.jpg"),
                                     blend_mode=ft.BlendMode.DST_IN,
@@ -211,8 +213,6 @@ class ProfileView(ft.UserControl):
                                         stops=[0, 0.85],
                                     ),
                                 ),
-                                # Baackground image
-
                                 
                                 # Header Column
                                 ft.Column(
@@ -220,8 +220,8 @@ class ProfileView(ft.UserControl):
                                         ft.Row(
                                             alignment=ft.MainAxisAlignment.START,
                                             controls=[
-                                                ft.Divider(),
                                                 
+                                                # Return button
                                                 ft.IconButton(
                                                     icon=ft.icons.ARROW_BACK_IOS,
                                                 ),
@@ -311,6 +311,28 @@ class ProfileView(ft.UserControl):
                                 )
                             ),
                             margin=ft.margin.only(left=10)
+                        ),
+                        
+                        ft.Row(
+                            controls=[
+                                ft.Container(
+                                    margin=ft.margin.only(left=10),
+                                    border_radius=8,
+                                    border=ft.border.all(color=ft.colors.GREY, width=2),
+                                    width=350 / 2 - 2.5, # Para que quede un espacio de 5 entre los contenedores
+                                    height=100,
+                                    bgcolor="transparent"
+                                ),
+                                
+                                ft.Container(
+                                    margin=ft.margin.only(right=10),
+                                    width=350 / 2 - 2.5, # Para que quede un espacio de 5 entre los contenedores
+                                    border_radius=8,
+                                    border=ft.border.all(color=ft.colors.GREY, width=2),
+                                    height=100,
+                                    bgcolor="transparent"
+                                ),
+                            ]
                         )
                     ]
                 )
