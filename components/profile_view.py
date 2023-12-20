@@ -324,6 +324,9 @@ class ProfileView(ft.UserControl):
                             deaths=match_data['deaths'],
                             assists=match_data['assists'],
                             minion_kills=match_data['minion_kills'],
+                            vision_score=match_data['vision_score'],
+                            item_purchase=match_data['item_purchase'],
+                            summoner_spells=match_data['summoner_spells'],
                         )
                         for match_data in self.match_data_list
                     ],
