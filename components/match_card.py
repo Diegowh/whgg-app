@@ -17,6 +17,10 @@ class MatchCard(ft.UserControl):
         deaths: int,
         assists: int,
         minion_kills: int,
+        vision_score: int,
+        item_purchase: list,
+        summoner_spells: list,
+        
     ):
         super().__init__()
         
@@ -30,6 +34,9 @@ class MatchCard(ft.UserControl):
         self.deaths = deaths
         self.assists = assists
         self.minion_kills = minion_kills
+        self.vision_score = vision_score
+        self.item_purchase = item_purchase
+        self.summoner_spells = summoner_spells
         
         self.minutes, self.seconds = divmod(self.game_duration, 60)
         self.game_start_date = datetime.fromtimestamp(self.game_start).strftime("%d.%m.%Y")
@@ -82,27 +89,27 @@ class MatchCard(ft.UserControl):
                                                     alignment=ft.MainAxisAlignment.START,
                                                     spacing=2,
                                                     controls=[
-                                                        ft.Image("https://ddragon.leagueoflegends.com/cdn/11.20.1/img/champion/Fiddlesticks.png", width=50, height=50, border_radius=100),
+                                                        ft.Image(f"https://ddragon.leagueoflegends.com/cdn/11.20.1/img/champion/{self.champion_played}.png", width=50, height=50, border_radius=100),
                                                         
                                                         # Spells column
                                                         ft.Column(
                                                             alignment=ft.MainAxisAlignment.CENTER,
                                                             spacing=3,
                                                             controls=[
-                                                                ft.Image("https://ddragon.leagueoflegends.com/cdn/11.20.1/img/spell/SummonerFlash.png", width=20, height=20, border_radius=8),
-                                                                ft.Image("https://ddragon.leagueoflegends.com/cdn/11.20.1/img/spell/SummonerDot.png", width=20, height=20, border_radius=8),
+                                                                ft.Image(f"https://ddragon.leagueoflegends.com/cdn/11.20.1/img/spell/{summoner['id']}.png", width=20, height=20, border_radius=8) for summoner in self.summoner_spells
                                                             ]
                                                         ),
                                                         
+                                                        #TODO: Implementar las runas cuando haya actualizado la API para que las devuelva
                                                         # Runes column
-                                                        ft.Column(
-                                                            alignment=ft.MainAxisAlignment.CENTER,
-                                                            spacing=3,
-                                                            controls=[
-                                                                ft.Image("https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png", width=20, height=20, border_radius=8),
-                                                                ft.Image("https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png", width=20, height=20, border_radius=8),
-                                                            ]
-                                                        ),
+                                                        # ft.Column(
+                                                        #     alignment=ft.MainAxisAlignment.CENTER,
+                                                        #     spacing=3,
+                                                        #     controls=[
+                                                        #         ft.Image("https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png", width=20, height=20, border_radius=8),
+                                                        #         ft.Image("https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png", width=20, height=20, border_radius=8),
+                                                        #     ]
+                                                        # ),
                                                         
                                                         ft.VerticalDivider(width=4),
                                                         # KDA column
@@ -120,13 +127,7 @@ class MatchCard(ft.UserControl):
                                                     alignment=ft.MainAxisAlignment.START,
                                                     spacing=2,
                                                     controls=[
-                                                        ft.Image("https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/3070.png", width=25, border_radius=8),
-                                                        ft.Image("https://ddragon.leagueoflegends.com/cdn/11.20.1/img/item/3070.png", width=25, border_radius=8),
-                                                        ft.Image("https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/3070.png", width=25, border_radius=8),
-                                                        ft.Image("https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/3070.png", width=25, border_radius=8),
-                                                        ft.Image("https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/3070.png", width=25, border_radius=8),
-                                                        ft.Image("https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/3070.png", width=25, border_radius=8),
-                                                        ft.Image("https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/3363.png", width=25, border_radius=8),
+                                                        ft.Image(f"https://ddragon.leagueoflegends.com/cdn/13.24.1/img/item/{item['id']}.png", width=25, border_radius=8) for item in self.item_purchase #TODO: Averigurar por que el trinket no sale en ultima posicion
                                                     ]
                                                 ),
                                             ]
@@ -135,6 +136,8 @@ class MatchCard(ft.UserControl):
                                         
                                         # Right Info column
                                         ft.Column(
+                                            alignment=ft.MainAxisAlignment.CENTER,
+                                            
                                             controls=[
                                                 
                                                 # Game Mode
@@ -146,6 +149,12 @@ class MatchCard(ft.UserControl):
                                                 # Date
                                                 ft.Text(
                                                     value=f"{self.game_start_date}",
+                                                ),
+                                                
+                                                # Vision Score
+                                                ft.Text(
+                                                    value=f"Vision Score: {self.vision_score}",
+                                                    size=10,
                                                 )
                                             ]
                                         )
