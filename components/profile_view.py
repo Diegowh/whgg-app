@@ -1,4 +1,5 @@
 import flet as ft
+import roman
 
 from components.match_card import MatchCard
 from utils.utils import EMBLEM_URLS
@@ -21,11 +22,37 @@ class ProfileView(ft.UserControl):
         
         self.response = response
 
+        # Filtra la response para que sea mas facil de usar
+        self.summoner_data = self.response["summoner_data"]
+        ranked_stats = {item['queue_type']: item for item in self.response["ranked_stats_data_list"]}
+        #TODO: Contemplar el caso de que no existan datos de alguna cola para setearlos como Unranked y valores default
+        self.soloq_data = ranked_stats.get("RANKED_SOLO_5x5") 
+        self.flex_data = ranked_stats.get("RANKED_FLEX_SR")
+        self.champion_stats_data_list = self.response["champion_stats_data_list"]
+        self.match_data_list = self.response["match_data_list"]
+        
         self.page.appbar = ft.AppBar(
         title=ft.Text("Profile"),
         bgcolor=ft.colors.BLUE,
         )
         
+        # if not response:
+        #     self.controls = [
+        #         ft.SafeArea(
+        #             minimum=5,
+        #             content=ft.Column(
+        #                 controls=[
+        #                     # Return button
+        #                     ft.IconButton(
+        #                         icon=ft.icons.ARROW_BACK_IOS,
+        #                     ),
+        #                     ft.Text("Algo salió mal :("),
+        #                 ]
+        #             )
+        #         )
+        #     ]
+            
+        # else:
         self.controls = [
             ft.SafeArea(
                 minimum=5,
@@ -89,7 +116,7 @@ class ProfileView(ft.UserControl):
                                                         
                                                         # Icon
                                                         ft.Image(
-                                                            src=f'https://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/6022.png', #TODO Hacerlo dinámico con f-strings
+                                                            src=f"https://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/{self.summoner_data['icon_id']}.png",
                                                             width=80, 
                                                             height=80,
                                                             fit=ft.ImageFit.FILL,
@@ -98,7 +125,7 @@ class ProfileView(ft.UserControl):
                                                         
                                                         # Level
                                                         ft.Container(
-                                                            content=ft.Text("515"),
+                                                            content=ft.Text(f"{self.summoner_data['summoner_level']}"),
                                                             border_radius=10,
                                                             height=20,
                                                             width=40,
@@ -116,14 +143,14 @@ class ProfileView(ft.UserControl):
                                                             
                                                         # Name
                                                         ft.Text(
-                                                            value="wallhack",
+                                                            value=f"{self.summoner_data['name'].split('#')[0]}",
                                                             size=30,
                                                             weight=ft.FontWeight.BOLD,
                                                         ),
                                                         
                                                         # Tagline
                                                         ft.Text(
-                                                            value="#1312",
+                                                            value=f"#{self.summoner_data['name'].split('#')[1]}",
                                                         ),
                                                         
                                                     ],
@@ -155,6 +182,7 @@ class ProfileView(ft.UserControl):
                             margin=ft.margin.only(left=10)
                         ),
                         
+                        # TODO: Crear una clase para los contenedores de Ranked Data
                         # Ranked Data
                         ft.Row(
                             controls=[
@@ -173,7 +201,7 @@ class ProfileView(ft.UserControl):
                                             
                                             # League Icon
                                             ft.Image(
-                                                src=EMBLEM_URLS["emerald"],
+                                                src=EMBLEM_URLS[f'{self.soloq_data["tier"].upper()}'],
                                                 width=50,
                                                 height=50,
                                                 border_radius=100,
@@ -198,20 +226,20 @@ class ProfileView(ft.UserControl):
                                                     ),
                                                     # Soloq League
                                                     ft.Text(
-                                                        value="Emerald 2",
+                                                        value=f"{self.soloq_data['tier'].capitalize()} {roman.fromRoman(self.soloq_data['rank'])}",
                                                         size=18,
                                                         weight=ft.FontWeight.BOLD,
                                                     ),
                                                     
                                                     # Soloq LP
                                                     ft.Text(
-                                                        value="40 LP",
+                                                        value=f"{self.soloq_data['league_points']} LP",
                                                         size=12,
                                                     ),
                                                     
                                                     # Soloq WR
                                                     ft.Text(
-                                                        value="49W 43L (53%)",
+                                                        value=f"{self.soloq_data['wins']}W {self.soloq_data['losses']}L ({self.soloq_data['winrate']}%)",
                                                         size=12,
                                                     ),
                                                     
@@ -234,7 +262,7 @@ class ProfileView(ft.UserControl):
                                             
                                             # League Icon
                                             ft.Image(
-                                                src=EMBLEM_URLS["emerald"],
+                                                src=EMBLEM_URLS[f'{self.flex_data["tier"].upper()}'],
                                                 width=50,
                                                 height=50,
                                                 border_radius=100,
@@ -257,22 +285,22 @@ class ProfileView(ft.UserControl):
                                                             weight=ft.FontWeight.BOLD,
                                                         ),
                                                     ),
-                                                    # Soloq League
+                                                    # Flex League
                                                     ft.Text(
-                                                        value="Emerald 2",
+                                                        value=f"{self.flex_data['tier'].capitalize()} {roman.fromRoman(self.flex_data['rank'])}",
                                                         size=18,
                                                         weight=ft.FontWeight.BOLD,
                                                     ),
                                                     
-                                                    # Soloq LP
+                                                    # Flex LP
                                                     ft.Text(
-                                                        value="53 LP",
+                                                        value=f"{self.flex_data['league_points']} LP",
                                                         size=12,
                                                     ),
                                                     
-                                                    # Soloq WR
+                                                    # Flex WR
                                                     ft.Text(
-                                                        value="120W 93L (56%)",
+                                                        value=f"{self.flex_data['wins']}W {self.flex_data['losses']}L ({self.flex_data['winrate']}%)",
                                                         size=12,
                                                     ),
                                                     
