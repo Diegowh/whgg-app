@@ -31,10 +31,11 @@ class ProfileView(ft.UserControl):
         self.champion_stats_data_list = self.response["champion_stats_data_list"]
         self.match_data_list = self.response["match_data_list"]
         
-        self.page.appbar = ft.AppBar(
-        title=ft.Text("Profile"),
-        bgcolor=ft.colors.BLUE,
-        )
+        self.page.scroll = ft.ScrollMode.ALWAYS,
+        # self.page.appbar = ft.AppBar(
+        # title=ft.Text("Profile"),
+        # bgcolor=ft.colors.BLUE,
+        # )
         
         # if not response:
         #     self.controls = [
@@ -58,7 +59,7 @@ class ProfileView(ft.UserControl):
                 minimum=5,
                 content=ft.Column(
                     scroll=ft.ScrollMode.ALWAYS,
-                    auto_scroll=True,
+                    auto_scroll=False,
                     controls=[
                         # ft.AppBar(
                         #     title=ft.Text("Profile"),
@@ -67,7 +68,7 @@ class ProfileView(ft.UserControl):
                         
                         # Header Container
                         
-                        # Back button bar
+                        # Return button bar
                         
                         ft.Stack(
                             [
@@ -93,6 +94,7 @@ class ProfileView(ft.UserControl):
                                                 # Return button
                                                 ft.IconButton(
                                                     icon=ft.icons.ARROW_BACK_IOS,
+                                                    on_click=self.back_button_clicked,
                                                 ),
                                             ],
                                         ),
@@ -337,6 +339,9 @@ class ProfileView(ft.UserControl):
         return self.controls
     
     
-    def routing(self, event):
+    def back_button_clicked(self, event):
         # time.sleep(0.3) # Para evitar la carga prematura de los controles
         self.page.go(self.route_to)
+        
+    def update_button_clicked(self, event):
+        ...
