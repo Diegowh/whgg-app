@@ -4,6 +4,8 @@ from components.home_view import HomeView
 from components.profile_view import ProfileView
 from utils.utils import EMBLEM_URLS
 
+# temporal
+from components.response import RESPONSE
 
 def main(page: ft.Page):
     
@@ -16,8 +18,11 @@ def main(page: ft.Page):
     
     page.window_height = 840
     page.window_width = 410
+    
+    #TODO cambiar esto cuando termine el desarrollo de la pagina del perfil
     # home = HomeView(page)
-    home = ProfileView(page)
+    
+    home = ProfileView(page, response=RESPONSE)
     
     def route_change(e: ft.RouteChangeEvent) -> None:
         page.views.clear()
