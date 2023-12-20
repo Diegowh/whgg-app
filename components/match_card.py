@@ -50,6 +50,7 @@ class MatchCard(ft.UserControl):
                             ft.Container(
                                 bgcolor="#5b99fc" if self.win else "#e9665a",
                                 padding=ft.padding.only(top=10, bottom=10, left=5, right=5),
+                                width=45,
                                 content=ft.Column(
                                     alignment=ft.MainAxisAlignment.CENTER,
                                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
