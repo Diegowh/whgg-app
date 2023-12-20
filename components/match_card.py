@@ -39,7 +39,7 @@ class MatchCard(ft.UserControl):
         self.summoner_spells = summoner_spells
         
         self.minutes, self.seconds = divmod(self.game_duration, 60)
-        self.game_start_date = datetime.fromtimestamp(self.game_start).strftime("%d.%m.%Y")
+        self.game_start_date = datetime.fromtimestamp(self.game_start).strftime("%d.%m.%y")
         
         
         self.controls=[
