@@ -20,9 +20,9 @@ def main(page: ft.Page):
     page.window_width = 410
     
     #TODO cambiar esto cuando termine el desarrollo de la pagina del perfil
-    # home = HomeView(page)
+    home = HomeView(page)
     
-    home = ProfileView(page, response=RESPONSE)
+    # profile = ProfileView(page, response=RESPONSE)
     
     def route_change(e: ft.RouteChangeEvent) -> None:
         page.views.clear()
