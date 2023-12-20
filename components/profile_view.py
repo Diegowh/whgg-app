@@ -315,7 +315,7 @@ class ProfileView(ft.UserControl):
                         # Match Cards
                         MatchCard(
                             game_start=int(match_data['game_start'] / 1000),
-                            game_duration=int(match_data['game_duration'] / 1000),
+                            game_duration=match_data['game_duration'],
                             game_mode=match_data['game_mode'], #TODO fix this on the backend
                             game_type=match_data['game_type'],
                             champion_played=match_data['champion_played'],
