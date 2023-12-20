@@ -137,6 +137,7 @@ class MatchCard(ft.UserControl):
                                         # Right Info column
                                         ft.Column(
                                             alignment=ft.MainAxisAlignment.CENTER,
+                                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                                             
                                             controls=[
                                                 
