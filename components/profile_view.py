@@ -31,7 +31,7 @@ class ProfileView(ft.UserControl):
         self.champion_stats_data_list = self.response["champion_stats_data_list"]
         self.match_data_list = self.response["match_data_list"]
         
-        self.page.scroll = ft.ScrollMode.ALWAYS,
+        self.scroll = ft.ScrollMode.ALWAYS,
         # self.page.appbar = ft.AppBar(
         # title=ft.Text("Profile"),
         # bgcolor=ft.colors.BLUE,
@@ -58,8 +58,6 @@ class ProfileView(ft.UserControl):
             ft.SafeArea(
                 minimum=5,
                 content=ft.Column(
-                    scroll=ft.ScrollMode.ALWAYS,
-                    auto_scroll=False,
                     controls=[
                         # ft.AppBar(
                         #     title=ft.Text("Profile"),
@@ -313,24 +311,30 @@ class ProfileView(ft.UserControl):
                                 ),
                             ],
                         ),
-                    ] + [
-                        # Match Cards
-                        MatchCard(
-                            game_start=int(match_data['game_start'] / 1000),
-                            game_duration=match_data['game_duration'],
-                            game_mode=match_data['game_mode'], #TODO fix this on the backend
-                            game_type=match_data['game_type'],
-                            champion_played=match_data['champion_played'],
-                            win=match_data['win'],
-                            kills=match_data['kills'],
-                            deaths=match_data['deaths'],
-                            assists=match_data['assists'],
-                            minion_kills=match_data['minion_kills'],
-                            vision_score=match_data['vision_score'],
-                            item_purchase=match_data['item_purchase'],
-                            summoner_spells=match_data['summoner_spells'],
-                        )
-                        for match_data in self.match_data_list
+                        
+                        ft.Column(
+                            scroll=ft.ScrollMode.AUTO,
+                            height=400,
+                            controls=[
+                                # Match Cards
+                                MatchCard(
+                                    game_start=int(match_data['game_start'] / 1000),
+                                    game_duration=match_data['game_duration'],
+                                    game_mode=match_data['game_mode'], #TODO fix this on the backend
+                                    game_type=match_data['game_type'],
+                                    champion_played=match_data['champion_played'],
+                                    win=match_data['win'],
+                                    kills=match_data['kills'],
+                                    deaths=match_data['deaths'],
+                                    assists=match_data['assists'],
+                                    minion_kills=match_data['minion_kills'],
+                                    vision_score=match_data['vision_score'],
+                                    item_purchase=match_data['item_purchase'],
+                                    summoner_spells=match_data['summoner_spells'],
+                                )
+                                for match_data in self.match_data_list
+                            ],
+                        ),
                     ],
                 ),
             ),
