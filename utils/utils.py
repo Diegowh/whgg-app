@@ -1,3 +1,6 @@
+import requests
+
+
 EMBLEM_URLS = {
     "UNRANKED": "https://static.wikia.nocookie.net/leagueoflegends/images/1/13/Season_2023_-_Unranked.png",
     "IRON": "https://static.wikia.nocookie.net/leagueoflegends/images/f/f8/Season_2023_-_Iron.png",
@@ -11,3 +14,13 @@ EMBLEM_URLS = {
     "GRANDMASTER": "https://static.wikia.nocookie.net/leagueoflegends/images/6/64/Season_2023_-_Grandmaster.png/revision/latest?cb=20231007195830",
     "CHALLENGER": "https://static.wikia.nocookie.net/leagueoflegends/images/1/14/Season_2023_-_Challenger.png/revision/latest?cb=20231007195825",
 }
+
+
+def request(game_name: str, tagline: str, server: str = "EUW") -> dict:
+    print("Requesting...")
+    
+    response = requests.get(url=f"http://127.0.0.1:8000/api/{server}/{game_name}-{tagline}")
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Response: {response.status_code}. Something went wrong.")
