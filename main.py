@@ -19,10 +19,12 @@ def main(page: ft.Page):
     page.window_height = 840
     page.window_width = 410
     
+    
     #TODO cambiar esto cuando termine el desarrollo de la pagina del perfil
     home = HomeView(page)
     
-    # profile = ProfileView(page, response=RESPONSE)
+    
+    # profile = ProfileView(page, response=RESPONSE) # TODO: Renombrar variable a profile cuando termine el desarrollo
     
     def route_change(e: ft.RouteChangeEvent) -> None:
         page.views.clear()
@@ -37,7 +39,14 @@ def main(page: ft.Page):
         if page.route == "/profile":
             
             response = home.response
-            profile = ProfileView(page=page, response=response)
+            profile = ProfileView(
+                page=page, 
+                response=response, 
+                game_name=home.game_name, 
+                tagline=home.tagline, 
+                server=home.server
+            )
+            
             page.views.append(profile)
             
         page.update()
