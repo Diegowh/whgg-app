@@ -1,8 +1,10 @@
 import flet as ft
 import roman
+import time
 
 from components.match_card import MatchCard
 from utils.utils import EMBLEM_URLS
+from utils import utils
 
 
 class ProfileView(ft.UserControl):
@@ -13,14 +15,22 @@ class ProfileView(ft.UserControl):
         icon=ft.icons.HOME,
         route_to="/",
         response=None,
+        game_name=None,
+        tagline=None,
+        server=None,
     ):
         super().__init__()
         
         self.page = page
+        self.route = route
         self.icon = icon
         self.route_to = route_to
         
         self.response = response
+        
+        self.game_name = game_name
+        self.tagline = tagline
+        self.server = server
 
         # Filtra la response para que sea mas facil de usar
         self.summoner_data = self.response["summoner_data"]
@@ -177,7 +187,8 @@ class ProfileView(ft.UserControl):
                                     shape={
                                         ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=5)
                                     }
-                                )
+                                ),
+                                on_click=self.update_button_clicked,
                             ),
                             margin=ft.margin.only(left=10)
                         ),
@@ -348,4 +359,12 @@ class ProfileView(ft.UserControl):
         self.page.go(self.route_to)
         
     def update_button_clicked(self, event):
-        ...
+        time.sleep(0.3)
+        
+        self.response = utils.request(
+            game_name=self.game_name,
+            tagline=self.tagline,
+            server=self.server,
+        )
+        
+        self.page.go(self.route)
