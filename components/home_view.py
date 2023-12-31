@@ -124,7 +124,7 @@ class HomeView(ft.UserControl):
     def routing(self, event):
         time.sleep(0.3) # Para evitar la carga prematura de los controles
         
-        # Formatear el nombre de invocador para la solicitud
+        # Formatea el nombre de invocador para la solicitud
         game_name, tagline = self.filter_textfield(value=self.summoner_name_textfield.value)
         server = self.filter_dropdown_value(value=self.server_dropdown.value)
         
