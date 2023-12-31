@@ -2,6 +2,8 @@ import flet as ft
 import time
 import requests
 
+from utils import utils
+
 class HomeView(ft.UserControl):
     def __init__(
         self,
@@ -9,6 +11,7 @@ class HomeView(ft.UserControl):
         route="/",
         icon=ft.icons.HOME,
         route_to="/profile",
+        
     ):
         super().__init__()
         
@@ -108,6 +111,10 @@ class HomeView(ft.UserControl):
                 )
             )
         ]
+        
+        self.game_name = None
+        self.tagline = None
+        self.server = None
 
     @property
     def response(self):
@@ -125,13 +132,13 @@ class HomeView(ft.UserControl):
         time.sleep(0.3) # Para evitar la carga prematura de los controles
         
         # Formatea el nombre de invocador para la solicitud
-        game_name, tagline = self.filter_textfield(value=self.summoner_name_textfield.value)
-        server = self.filter_dropdown_value(value=self.server_dropdown.value)
+        self.game_name, self.tagline = self.filter_textfield(value=self.summoner_name_textfield.value)
+        self.server = self.filter_dropdown_value(value=self.server_dropdown.value)
         
-        self.response = self.request(
-            game_name=game_name,
-            tagline=tagline,
-            server=server,
+        self.response = utils.request(
+            game_name=self.game_name,
+            tagline=self.tagline,
+            server=self.server,
         )
         
         self.page.go(self.route_to)
@@ -154,11 +161,11 @@ class HomeView(ft.UserControl):
         
         return game_name, tagline
         
-    def request(self, game_name: str, tagline: str, server: str = "EUW"):
-        print("Requesting...")
+    # def request(self, game_name: str, tagline: str, server: str = "EUW"):
+    #     print("Requesting...")
         
-        response = requests.get(url=f"http://127.0.0.1:8000/api/{server}/{game_name}-{tagline}")
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print(f"Response: {response.status_code}. Something went wrong.")
+    #     response = requests.get(url=f"http://127.0.0.1:8000/api/{server}/{game_name}-{tagline}")
+    #     if response.status_code == 200:
+    #         return response.json()
+    #     else:
+    #         print(f"Response: {response.status_code}. Something went wrong.")
