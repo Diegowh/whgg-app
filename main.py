@@ -1,7 +1,7 @@
 import flet as ft
 
-from components.home_view import HomeView
-from components.profile_view import ProfileView
+from views.home_view import HomeView
+from views.profile_view import ProfileView
 from utils.utils import EMBLEM_URLS
 
 # temporal
