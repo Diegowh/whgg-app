@@ -33,8 +33,6 @@ class ProfileView(ft.UserControl):
         self.tagline = tagline
         self.server = server
 
-        if self.response is None:
-            self.response = utils.DEFAULT_RESPONSE
         # Filtra la response para que sea mas facil de usar
         self.summoner_data = self.response["summoner_data"]
         ranked_stats = {
