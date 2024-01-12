@@ -2,7 +2,9 @@ import flet as ft
 import time
 import requests
 
+from components.home_view.header_bar import HeaderBar
 from utils import utils
+
 
 class HomeView(ft.UserControl):
     def __init__(
@@ -11,16 +13,16 @@ class HomeView(ft.UserControl):
         route="/",
         icon=ft.icons.HOME,
         route_to="/profile",
-        
+
     ):
         super().__init__()
-        
+
         self.page = page
         self.icon = icon
         self.route_to = route_to
 
         self._response = None
-        
+
         self.summoner_name_textfield = ft.TextField(
             autocorrect=False,
             autofocus=False,
@@ -28,7 +30,7 @@ class HomeView(ft.UserControl):
             border=ft.InputBorder.UNDERLINE,
             border_radius=10,
         )
-        
+
         self.server_dropdown = ft.Dropdown(
             text_size=16,
             color=ft.colors.WHITE,
@@ -55,50 +57,30 @@ class HomeView(ft.UserControl):
                 ft.dropdown.Option(key="tw2", text="TW"),
             ],
         )
-        
+
         self.controls = [
             ft.SafeArea(
                 minimum=5,
                 content=ft.Column(
-                    controls = [
-                        
+                    controls=[
+
                         # Header Bar
-                        ft.Row(
-                            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                            controls=[
-                                
-                                # LOGO WHGG
-                                ft.Text(
-                                    value="WHGG",
-                                    color="#e9665a",
-                                    size=60,
-                                    weight=ft.FontWeight.BOLD,
-                                ),
-                                
-                                # Server Dropdown
-                                ft.Container(
-                                    padding=ft.padding.only(left=10),
-                                    border_radius=8,
-                                    bgcolor="#e9665a",
-                                    content=self.server_dropdown,
-                                ),
-                            ]
-                        ),
-                        
+                        HeaderBar(),
+
                         # Empty space
                         ft.Divider(
                             height=70,
                             color="transparent",
                         ),
-                        
+
                         # Search Bar
                         ft.Row(
                             alignment=ft.MainAxisAlignment.SPACE_AROUND,
                             controls=[
-                                
+
                                 # Summoner name TextInput
                                 self.summoner_name_textfield,
-                                
+
                                 # Search button
                                 ft.IconButton(
                                     icon=ft.icons.SEARCH,
@@ -106,12 +88,12 @@ class HomeView(ft.UserControl):
                                 )
                             ]
                         )
-                        
+
                     ]
                 )
             )
         ]
-        
+
         self.game_name = None
         self.tagline = None
         self.server = None
@@ -119,51 +101,52 @@ class HomeView(ft.UserControl):
     @property
     def response(self):
         return self._response
-    
+
     @response.setter
     def response(self, value):
         self._response = value
-        
-        
+
     def build(self):
         return self.controls
-    
+
     def routing(self, event):
-        time.sleep(0.3) # Para evitar la carga prematura de los controles
-        
+        time.sleep(0.3)  # Para evitar la carga prematura de los controles
+
         # Formatea el nombre de invocador para la solicitud
-        self.game_name, self.tagline = self.filter_textfield(value=self.summoner_name_textfield.value)
-        self.server = self.filter_dropdown_value(value=self.server_dropdown.value)
-        
+        self.game_name, self.tagline = self.filter_textfield(
+            value=self.summoner_name_textfield.value)
+        self.server = self.filter_dropdown_value(
+            value=self.server_dropdown.value)
+
         self.response = utils.request(
             game_name=self.game_name,
             tagline=self.tagline,
             server=self.server,
         )
-        
+
         self.page.go(self.route_to)
-    
+
     def filter_dropdown_value(self, value: str = None):
         if value is None:
             return "euw1"
-        
+
         return value
-    
+
     def filter_textfield(self, value: str):
-        
+
         if "#" in value:
             game_name = value.split("#")[0]
             tagline = value.split("#")[1]
-        
+
         else:
             game_name = value
             tagline = "EUW"
-        
+
         return game_name, tagline
-        
+
     # def request(self, game_name: str, tagline: str, server: str = "EUW"):
     #     print("Requesting...")
-        
+
     #     response = requests.get(url=f"http://127.0.0.1:8000/api/{server}/{game_name}-{tagline}")
     #     if response.status_code == 200:
     #         return response.json()
