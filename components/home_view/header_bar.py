@@ -10,17 +10,8 @@ class HeaderBar(ft.Row):
 
         self.alignment = ft.MainAxisAlignment.SPACE_BETWEEN
         self.controls = [
-
-            # LOGO WHGG
             AppLogo(),
-
-            # Server Dropdown
-            ft.Container(
-                padding=ft.padding.only(left=10),
-                border_radius=8,
-                bgcolor="#e9665a",
-                content=ServerDropdown(),
-            ),
+            ServerDropdown(),
         ]
 
 
@@ -36,18 +27,29 @@ class AppLogo(ft.Text):
         self.weight = ft.FontWeight.BOLD
 
 
-class ServerDropdown(ft.Dropdown):
+class ServerDropdown(ft.Container):
 
     def __init__(self):
 
-        super().__init__()
+        self.dropdown = ft.Dropdown(
+            text_size=16,
+            color=ft.colors.WHITE,
+            border="NONE",
+            border_radius=35,
+            width=80,
+            height=50,
+            hint_text="EUW",
+            options=[ft.dropdown.Option(key=key, text=text)
+                     for key, text in SERVER_OPTIONS.items()],
+        )
 
-        self.text_size = 16
-        self.color = ft.colors.WHITE
-        self.border = "NONE"
-        self.border_radius = 35
-        self.width = 80
-        self.height = 50
-        self.hint_text = "EUW"
-        self.options = [ft.dropdown.Option(
-            key=key, text=text) for key, text in SERVER_OPTIONS.items()]
+        super().__init__(
+            padding=ft.padding.only(left=10),
+            border_radius=8,
+            bgcolor="#e9665a",
+            content=self.dropdown,
+        )
+
+    @property
+    def selected_value(self):
+        return self.dropdown.value
