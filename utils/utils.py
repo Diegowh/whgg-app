@@ -15,11 +15,30 @@ EMBLEM_URLS = {
     "CHALLENGER": "https://static.wikia.nocookie.net/leagueoflegends/images/1/14/Season_2023_-_Challenger.png/revision/latest?cb=20231007195825",
 }
 
+SERVER_OPTIONS = {
+    "euw1": "EUW",
+    "eun1": "EUNE",
+    "na1": "NA",
+    "br1": "BR",
+    "jp1": "JP",
+    "kr": "KR",
+    "la1": "LAN",
+    "la2": "LAS",
+    "tr1": "TR",
+    "oc1": "OCE",
+    "ru": "RU",
+    "sg2": "SG",
+    "th2": "TH",
+    "vn2": "VN",
+    "tw2": "TW",
+}
+
 
 def request(game_name: str, tagline: str, server: str = "EUW") -> dict:
     print("Requesting...")
-    
-    response = requests.get(url=f"http://127.0.0.1:8000/api/{server}/{game_name}-{tagline}")
+
+    response = requests.get(
+        url=f"http://127.0.0.1:8000/api/{server}/{game_name}-{tagline}")
     if response.status_code == 200:
         return response.json()
     else:

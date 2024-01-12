@@ -1,4 +1,5 @@
 import flet as ft
+from utils.utils import SERVER_OPTIONS
 
 
 class HeaderBar(ft.Row):
@@ -48,20 +49,5 @@ class ServerDropdown(ft.Dropdown):
         self.width = 80
         self.height = 50
         self.hint_text = "EUW"
-        self.options = [
-            ft.dropdown.Option(key="euw1", text="EUW"),
-            ft.dropdown.Option(key="eun1", text="EUNE"),
-            ft.dropdown.Option(key="na1", text="NA"),
-            ft.dropdown.Option(key="br1", text="BR"),
-            ft.dropdown.Option(key="jp1", text="JP"),
-            ft.dropdown.Option(key="kr", text="KR"),
-            ft.dropdown.Option(key="la1", text="LAN"),
-            ft.dropdown.Option(key="la2", text="LAS"),
-            ft.dropdown.Option(key="tr1", text="TR"),
-            ft.dropdown.Option(key="oc1", text="OCE"),
-            ft.dropdown.Option(key="ru", text="RU"),
-            ft.dropdown.Option(key="sg2", text="SG"),
-            ft.dropdown.Option(key="th2", text="TH"),
-            ft.dropdown.Option(key="vn2", text="VN"),
-            ft.dropdown.Option(key="tw2", text="TW"),
-        ]
+        self.options = [ft.dropdown.Option(
+            key=key, text=text) for key, text in SERVER_OPTIONS.items()]
