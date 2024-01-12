@@ -3,6 +3,7 @@ import roman
 import time
 
 from components.match_card import MatchCard
+from components.champion_stats_card import ChampionStatsCard
 from utils.utils import EMBLEM_URLS
 from utils import utils
 
@@ -20,33 +21,36 @@ class ProfileView(ft.UserControl):
         server=None,
     ):
         super().__init__()
-        
+
         self.page = page
         self.route = route
         self.icon = icon
         self.route_to = route_to
-        
+
         self.response = response
-        
+
         self.game_name = game_name
         self.tagline = tagline
         self.server = server
 
+        if self.response is None:
+            self.response = utils.DEFAULT_RESPONSE
         # Filtra la response para que sea mas facil de usar
         self.summoner_data = self.response["summoner_data"]
-        ranked_stats = {item['queue_type']: item for item in self.response["ranked_stats_data_list"]}
-        #TODO: Contemplar el caso de que no existan datos de alguna cola para setearlos como Unranked y valores default
-        self.soloq_data = ranked_stats.get("RANKED_SOLO_5x5") 
+        ranked_stats = {
+            item['queue_type']: item for item in self.response["ranked_stats_data_list"]}
+        # TODO: Contemplar el caso de que no existan datos de alguna cola para setearlos como Unranked y valores default
+        self.soloq_data = ranked_stats.get("RANKED_SOLO_5x5")
         self.flex_data = ranked_stats.get("RANKED_FLEX_SR")
         self.champion_stats_data_list = self.response["champion_stats_data_list"]
         self.match_data_list = self.response["match_data_list"]
-        
+
         self.scroll = ft.ScrollMode.ALWAYS,
         # self.page.appbar = ft.AppBar(
         # title=ft.Text("Profile"),
         # bgcolor=ft.colors.BLUE,
         # )
-        
+
         # if not response:
         #     self.controls = [
         #         ft.SafeArea(
@@ -62,7 +66,7 @@ class ProfileView(ft.UserControl):
         #             )
         #         )
         #     ]
-            
+
         # else:
         self.controls = [
             ft.SafeArea(
@@ -73,32 +77,34 @@ class ProfileView(ft.UserControl):
                         #     title=ft.Text("Profile"),
                         #     bgcolor=ft.colors.BLUE,
                         # ),
-                        
+
                         # Header Container
-                        
+
                         # Return button bar
-                        
+
                         ft.Stack(
                             [
                                 # Baackground image
                                 ft.ShaderMask(
-                                    ft.Image("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiddlesticks_3.jpg"),
+                                    ft.Image(
+                                        "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiddlesticks_3.jpg"),
                                     blend_mode=ft.BlendMode.DST_IN,
                                     shader=ft.LinearGradient(
                                         begin=ft.alignment.center_right,
                                         end=ft.alignment.center_left,
-                                        colors=[ft.colors.BLACK, ft.colors.TRANSPARENT],
+                                        colors=[ft.colors.BLACK,
+                                                ft.colors.TRANSPARENT],
                                         stops=[0, 0.85],
                                     ),
                                 ),
-                                
+
                                 # Header Column
                                 ft.Column(
                                     controls=[
                                         ft.Row(
                                             alignment=ft.MainAxisAlignment.START,
                                             controls=[
-                                                
+
                                                 # Return button
                                                 ft.IconButton(
                                                     icon=ft.icons.ARROW_BACK_IOS,
@@ -106,36 +112,37 @@ class ProfileView(ft.UserControl):
                                                 ),
                                             ],
                                         ),
-                                        
+
                                         # Empty space
                                         ft.Divider(
                                             height=10,
                                             color="transparent",
                                         ),
-                                        
+
                                         # Profile header
                                         ft.Row(
                                             alignment=ft.MainAxisAlignment.START,
                                             controls=[
-                                                
+
                                                 ft.Divider(),
-                                                
+
                                                 # Icon and Level
                                                 ft.Stack(
                                                     controls=[
-                                                        
+
                                                         # Icon
                                                         ft.Image(
                                                             src=f"https://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/{self.summoner_data['icon_id']}.png",
-                                                            width=80, 
+                                                            width=80,
                                                             height=80,
                                                             fit=ft.ImageFit.FILL,
                                                             border_radius=100,
                                                         ),
-                                                        
+
                                                         # Level
                                                         ft.Container(
-                                                            content=ft.Text(f"{self.summoner_data['summoner_level']}"),
+                                                            content=ft.Text(
+                                                                f"{self.summoner_data['summoner_level']}"),
                                                             border_radius=10,
                                                             height=20,
                                                             width=40,
@@ -146,25 +153,25 @@ class ProfileView(ft.UserControl):
                                                         ),
                                                     ]
                                                 ),
-                                                
+
                                                 # Name and Tagline Column
                                                 ft.Column(
                                                     controls=[
-                                                            
+
                                                         # Name
                                                         ft.Text(
                                                             value=f"{self.summoner_data['name'].split('#')[0]}",
                                                             size=30,
                                                             weight=ft.FontWeight.BOLD,
                                                         ),
-                                                        
+
                                                         # Tagline
                                                         ft.Text(
                                                             value=f"#{self.summoner_data['name'].split('#')[1]}",
                                                         ),
-                                                        
+
                                                     ],
-                                                    
+
                                                 ),
                                             ]
                                         ),
@@ -172,7 +179,7 @@ class ProfileView(ft.UserControl):
                                 )
                             ],
                         ),
-                        
+
                         # Update Button
                         ft.Container(
                             content=ft.ElevatedButton(
@@ -182,34 +189,37 @@ class ProfileView(ft.UserControl):
                                 bgcolor="#5b99fc",
                                 style=ft.ButtonStyle(
                                     side={
-                                        ft.MaterialState.PRESSED: ft.BorderSide(2, ft.colors.BLUE)
+                                        ft.MaterialState.PRESSED: ft.BorderSide(
+                                            2, ft.colors.BLUE)
                                     },
                                     shape={
-                                        ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=5)
+                                        ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(
+                                            radius=5)
                                     }
                                 ),
                                 on_click=self.update_button_clicked,
                             ),
                             margin=ft.margin.only(left=10)
                         ),
-                        
+
                         # TODO: Crear una clase para los contenedores de Ranked Data
                         # Ranked Data
                         ft.Row(
                             controls=[
-                                
+
                                 # Soloq container
                                 ft.Container(
                                     margin=ft.margin.only(left=10),
                                     padding=ft.padding.only(left=4),
                                     border_radius=8,
-                                    border=ft.border.all(color=ft.colors.GREY, width=1),
-                                    width=350 / 2 - 2.5, # Para que quede un espacio de 5 entre los contenedores
+                                    border=ft.border.all(
+                                        color=ft.colors.GREY, width=1),
+                                    width=350 / 2 - 2.5,  # Para que quede un espacio de 5 entre los contenedores
                                     height=90,
                                     bgcolor="transparent",
                                     content=ft.Row(
                                         controls=[
-                                            
+
                                             # League Icon
                                             ft.Image(
                                                 src=EMBLEM_URLS[f'{self.soloq_data["tier"].upper()}'],
@@ -217,17 +227,18 @@ class ProfileView(ft.UserControl):
                                                 height=50,
                                                 border_radius=100,
                                             ),
-                                            
+
                                             # Soloq Data
                                             ft.Column(
                                                 alignment=ft.MainAxisAlignment.CENTER,
                                                 spacing=1,
                                                 controls=[
-                                                    
+
                                                     # Titulo Soloq
                                                     ft.Container(
                                                         bgcolor="#3037fc",
-                                                        padding=ft.padding.all(2),
+                                                        padding=ft.padding.all(
+                                                            2),
                                                         border_radius=5,
                                                         content=ft.Text(
                                                             value="Clasificatoria Solo/Dúo",
@@ -241,36 +252,37 @@ class ProfileView(ft.UserControl):
                                                         size=18,
                                                         weight=ft.FontWeight.BOLD,
                                                     ),
-                                                    
+
                                                     # Soloq LP
                                                     ft.Text(
                                                         value=f"{self.soloq_data['league_points']} LP",
                                                         size=12,
                                                     ),
-                                                    
+
                                                     # Soloq WR
                                                     ft.Text(
                                                         value=f"{self.soloq_data['wins']}W {self.soloq_data['losses']}L ({self.soloq_data['winrate']}%)",
                                                         size=12,
                                                     ),
-                                                    
+
                                                 ],
                                             )
                                         ],
                                     ),
                                 ),
-                                
+
                                 # Flex container
                                 ft.Container(
                                     padding=ft.padding.only(left=4),
                                     border_radius=8,
-                                    border=ft.border.all(color=ft.colors.GREY, width=1),
-                                    width=350 / 2 - 2.5, # Para que quede un espacio de 5 entre los contenedores
+                                    border=ft.border.all(
+                                        color=ft.colors.GREY, width=1),
+                                    width=350 / 2 - 2.5,  # Para que quede un espacio de 5 entre los contenedores
                                     height=90,
                                     bgcolor="transparent",
                                     content=ft.Row(
                                         controls=[
-                                            
+
                                             # League Icon
                                             ft.Image(
                                                 src=EMBLEM_URLS[f'{self.flex_data["tier"].upper()}'],
@@ -278,17 +290,18 @@ class ProfileView(ft.UserControl):
                                                 height=50,
                                                 border_radius=100,
                                             ),
-                                            
+
                                             # Soloq Data
                                             ft.Column(
                                                 alignment=ft.MainAxisAlignment.CENTER,
                                                 spacing=1,
                                                 controls=[
-                                                    
+
                                                     # Titulo Soloq
                                                     ft.Container(
                                                         bgcolor="#3037fc",
-                                                        padding=ft.padding.all(2),
+                                                        padding=ft.padding.all(
+                                                            2),
                                                         border_radius=5,
                                                         content=ft.Text(
                                                             value="Clasificatoria Flexible",
@@ -302,19 +315,19 @@ class ProfileView(ft.UserControl):
                                                         size=18,
                                                         weight=ft.FontWeight.BOLD,
                                                     ),
-                                                    
+
                                                     # Flex LP
                                                     ft.Text(
                                                         value=f"{self.flex_data['league_points']} LP",
                                                         size=12,
                                                     ),
-                                                    
+
                                                     # Flex WR
                                                     ft.Text(
                                                         value=f"{self.flex_data['wins']}W {self.flex_data['losses']}L ({self.flex_data['winrate']}%)",
                                                         size=12,
                                                     ),
-                                                    
+
                                                 ],
                                             )
                                         ],
@@ -322,16 +335,18 @@ class ProfileView(ft.UserControl):
                                 ),
                             ],
                         ),
-                        
+
                         ft.Column(
                             scroll=ft.ScrollMode.AUTO,
                             height=400,
                             controls=[
                                 # Match Cards
                                 MatchCard(
-                                    game_start=int(match_data['game_start'] / 1000),
+                                    game_start=int(
+                                        match_data['game_start'] / 1000),
                                     game_duration=match_data['game_duration'],
-                                    game_mode=match_data['game_mode'], #TODO fix this on the backend
+                                    # TODO fix this on the backend
+                                    game_mode=match_data['game_mode'],
                                     game_type=match_data['game_type'],
                                     champion_played=match_data['champion_played'],
                                     win=match_data['win'],
@@ -344,27 +359,32 @@ class ProfileView(ft.UserControl):
                                     summoner_spells=match_data['summoner_spells'],
                                 )
                                 for match_data in self.match_data_list
+                            ] + [
+                                # Champion Stats
+                                ChampionStatsCard(
+                                    champion_stats=self.champion_stats_data,
+                                ) for self.champion_stats_data in self.champion_stats_data_list
                             ],
                         ),
                     ],
                 ),
             ),
         ]
+
     def build(self):
         return self.controls
-    
-    
+
     def back_button_clicked(self, event):
         # time.sleep(0.3) # Para evitar la carga prematura de los controles
         self.page.go(self.route_to)
-        
+
     def update_button_clicked(self, event):
         time.sleep(0.3)
-        
+
         self.response = utils.request(
             game_name=self.game_name,
             tagline=self.tagline,
             server=self.server,
         )
-        
+
         self.page.go(self.route)
