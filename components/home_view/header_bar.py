@@ -8,10 +8,12 @@ class HeaderBar(ft.Row):
 
         super().__init__()
 
+        self.dropdown = ServerDropdown()
+
         self.alignment = ft.MainAxisAlignment.SPACE_BETWEEN
         self.controls = [
             AppLogo(),
-            ServerDropdown(),
+            self.dropdown,
         ]
 
 
@@ -51,5 +53,5 @@ class ServerDropdown(ft.Container):
         )
 
     @property
-    def selected_value(self):
+    def value(self):
         return self.dropdown.value

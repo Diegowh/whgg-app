@@ -1,16 +1,23 @@
 import flet as ft
+from components.home_view.header_bar import ServerDropdown
 
 
-class SummonerSearchBar(ft.Row):
+class SearchBar(ft.Row):
 
-    def __init__(self):
+    def __init__(
+        self,
+        routing_func: callable,
+    ):
 
         super().__init__()
+
+        self.routing = routing_func
+        self.summoner_name_textfield = SummonerNameTextField()
 
         self.alignment = ft.MainAxisAlignment.SPACE_AROUND
         self.controls = [
 
-            SummonerNameTextField(),
+            self.summoner_name_textfield,
 
             # Search button
             ft.IconButton(
@@ -31,7 +38,3 @@ class SummonerNameTextField(ft.TextField):
         self.label = "Game Name + Tagline"
         self.border = ft.InputBorder.UNDERLINE
         self.border_radius = 10
-
-    @property
-    def text(self):
-        return self.value

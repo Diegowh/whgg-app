@@ -3,6 +3,7 @@ import time
 import requests
 
 from components.home_view.header_bar import HeaderBar
+from components.home_view.search_bar import SearchBar
 from utils import utils
 
 
@@ -31,14 +32,16 @@ class HomeView(ft.UserControl):
             border_radius=10,
         )
 
+        self.header_bar = HeaderBar()
+        self.search_bar = SearchBar(routing_func=self.routing)
+
         self.controls = [
             ft.SafeArea(
                 minimum=5,
                 content=ft.Column(
                     controls=[
 
-                        # Header Bar
-                        HeaderBar(),
+                        self.header_bar,
 
                         # Empty space
                         ft.Divider(
@@ -47,21 +50,7 @@ class HomeView(ft.UserControl):
                         ),
 
                         # Search Bar
-                        ft.Row(
-                            alignment=ft.MainAxisAlignment.SPACE_AROUND,
-                            controls=[
-
-                                # Summoner name TextInput
-                                self.summoner_name_textfield,
-
-                                # Search button
-                                ft.IconButton(
-                                    icon=ft.icons.SEARCH,
-                                    on_click=self.routing,
-                                )
-                            ]
-                        )
-
+                        self.search_bar,
                     ]
                 )
             )
@@ -87,9 +76,9 @@ class HomeView(ft.UserControl):
 
         # Formatea el nombre de invocador para la solicitud
         self.game_name, self.tagline = self.filter_textfield(
-            value=self.summoner_name_textfield.value)
+            value=self.search_bar.summoner_name_textfield.value)
         self.server = self.filter_dropdown_value(
-            value=self.server_dropdown.value)
+            value=self.header_bar.dropdown.value)
 
         self.response = utils.request(
             game_name=self.game_name,
