@@ -31,3 +31,7 @@ class SummonerNameTextField(ft.TextField):
         self.label = "Game Name + Tagline"
         self.border = ft.InputBorder.UNDERLINE
         self.border_radius = 10
+
+    @property
+    def text(self):
+        return self.value
