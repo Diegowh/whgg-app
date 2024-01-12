@@ -105,12 +105,3 @@ class HomeView(ft.UserControl):
             tagline = "EUW"
 
         return game_name, tagline
-
-    # def request(self, game_name: str, tagline: str, server: str = "EUW"):
-    #     print("Requesting...")
-
-    #     response = requests.get(url=f"http://127.0.0.1:8000/api/{server}/{game_name}-{tagline}")
-    #     if response.status_code == 200:
-    #         return response.json()
-    #     else:
-    #         print(f"Response: {response.status_code}. Something went wrong.")
