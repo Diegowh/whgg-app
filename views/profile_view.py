@@ -44,42 +44,11 @@ class ProfileView(ft.UserControl):
         self.match_data_list = self.response["match_data_list"]
 
         self.scroll = ft.ScrollMode.ALWAYS,
-        # self.page.appbar = ft.AppBar(
-        # title=ft.Text("Profile"),
-        # bgcolor=ft.colors.BLUE,
-        # )
-
-        # if not response:
-        #     self.controls = [
-        #         ft.SafeArea(
-        #             minimum=5,
-        #             content=ft.Column(
-        #                 controls=[
-        #                     # Return button
-        #                     ft.IconButton(
-        #                         icon=ft.icons.ARROW_BACK_IOS,
-        #                     ),
-        #                     ft.Text("Algo salió mal :("),
-        #                 ]
-        #             )
-        #         )
-        #     ]
-
-        # else:
         self.controls = [
             ft.SafeArea(
                 minimum=5,
                 content=ft.Column(
                     controls=[
-                        # ft.AppBar(
-                        #     title=ft.Text("Profile"),
-                        #     bgcolor=ft.colors.BLUE,
-                        # ),
-
-                        # Header Container
-
-                        # Return button bar
-
                         ft.Stack(
                             [
                                 # Baackground image
