@@ -4,6 +4,7 @@ import time
 
 from components.match_card import MatchCard
 from components.champion_stats_card import ChampionStatsCard
+from components.profile_view.profile_header import ProfileHeader
 from utils.utils import EMBLEM_URLS
 from utils import utils
 
@@ -49,102 +50,11 @@ class ProfileView(ft.UserControl):
                 minimum=5,
                 content=ft.Column(
                     controls=[
-                        ft.Stack(
-                            [
-                                # Baackground image
-                                ft.ShaderMask(
-                                    ft.Image(
-                                        "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiddlesticks_3.jpg"),
-                                    blend_mode=ft.BlendMode.DST_IN,
-                                    shader=ft.LinearGradient(
-                                        begin=ft.alignment.center_right,
-                                        end=ft.alignment.center_left,
-                                        colors=[ft.colors.BLACK,
-                                                ft.colors.TRANSPARENT],
-                                        stops=[0, 0.85],
-                                    ),
-                                ),
-
-                                # Header Column
-                                ft.Column(
-                                    controls=[
-                                        ft.Row(
-                                            alignment=ft.MainAxisAlignment.START,
-                                            controls=[
-
-                                                # Return button
-                                                ft.IconButton(
-                                                    icon=ft.icons.ARROW_BACK_IOS,
-                                                    on_click=self.back_button_clicked,
-                                                ),
-                                            ],
-                                        ),
-
-                                        # Empty space
-                                        ft.Divider(
-                                            height=10,
-                                            color="transparent",
-                                        ),
-
-                                        # Profile header
-                                        ft.Row(
-                                            alignment=ft.MainAxisAlignment.START,
-                                            controls=[
-
-                                                ft.Divider(),
-
-                                                # Icon and Level
-                                                ft.Stack(
-                                                    controls=[
-
-                                                        # Icon
-                                                        ft.Image(
-                                                            src=f"https://ddragon.leagueoflegends.com/cdn/13.24.1/img/profileicon/{self.summoner_data['icon_id']}.png",
-                                                            width=80,
-                                                            height=80,
-                                                            fit=ft.ImageFit.FILL,
-                                                            border_radius=100,
-                                                        ),
-
-                                                        # Level
-                                                        ft.Container(
-                                                            content=ft.Text(
-                                                                f"{self.summoner_data['summoner_level']}"),
-                                                            border_radius=10,
-                                                            height=20,
-                                                            width=40,
-                                                            bgcolor="#333333",
-                                                            alignment=ft.alignment.center,
-                                                            right=20,
-                                                            bottom=0,
-                                                        ),
-                                                    ]
-                                                ),
-
-                                                # Name and Tagline Column
-                                                ft.Column(
-                                                    controls=[
-
-                                                        # Name
-                                                        ft.Text(
-                                                            value=f"{self.summoner_data['name'].split('#')[0]}",
-                                                            size=30,
-                                                            weight=ft.FontWeight.BOLD,
-                                                        ),
-
-                                                        # Tagline
-                                                        ft.Text(
-                                                            value=f"#{self.summoner_data['name'].split('#')[1]}",
-                                                        ),
-
-                                                    ],
-
-                                                ),
-                                            ]
-                                        ),
-                                    ]
-                                )
-                            ],
+                        ProfileHeader(
+                            back_button_func=self.back_button_clicked,
+                            icon_id=self.summoner_data["icon_id"],
+                            summoner_lvl=self.summoner_data["summoner_level"],
+                            summoner_name=self.summoner_data["name"],
                         ),
 
                         # Update Button
