@@ -30,6 +30,7 @@ def main(page: ft.Page):
 
         page.views.append(
             home,
+
         )
 
         if page.route == "/home":
