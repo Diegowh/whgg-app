@@ -5,6 +5,8 @@ import time
 from components.match_card import MatchCard
 from components.champion_stats_card import ChampionStatsCard
 from components.profile_view.profile_header import ProfileHeader
+from components.profile_view.profile_buttons import ProfileButtons
+
 from utils.utils import EMBLEM_URLS
 from utils import utils
 
@@ -12,7 +14,6 @@ from utils import utils
 class ProfileView(ft.UserControl):
     def __init__(
         self,
-        page: ft.Page,
         route="/profile",
         icon=ft.icons.HOME,
         route_to="/",
@@ -23,7 +24,6 @@ class ProfileView(ft.UserControl):
     ):
         super().__init__()
 
-        self.page = page
         self.route = route
         self.icon = icon
         self.route_to = route_to
@@ -59,26 +59,9 @@ class ProfileView(ft.UserControl):
                             summoner_name=self.summoner_data["name"],
                         ),
 
-                        # Update Button
-                        ft.Container(
-                            content=ft.ElevatedButton(
-                                text="Update",
-                                width=150,
-                                color=ft.colors.WHITE,
-                                bgcolor="#5b99fc",
-                                style=ft.ButtonStyle(
-                                    side={
-                                        ft.MaterialState.PRESSED: ft.BorderSide(
-                                            2, ft.colors.BLUE)
-                                    },
-                                    shape={
-                                        ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(
-                                            radius=5)
-                                    }
-                                ),
-                                on_click=self.update_button_clicked,
-                            ),
-                            margin=ft.margin.only(left=10)
+                        # Update and Champion Stats buttons
+                        ProfileButtons(
+                            update_func=self.update_button_clicked,
                         ),
 
                         # TODO: Crear una clase para los contenedores de Ranked Data
