@@ -50,6 +50,8 @@ class ProfileView(ft.UserControl):
                 minimum=5,
                 content=ft.Column(
                     controls=[
+
+                        # Header
                         ProfileHeader(
                             back_button_func=self.back_button_clicked,
                             icon_id=self.summoner_data["icon_id"],
