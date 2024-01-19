@@ -45,37 +45,10 @@ class ProfileHeader(ft.Stack):
                     ),
 
                     # Summoner Details
-                    ft.Row(
-                        alignment=ft.MainAxisAlignment.START,
-                        controls=[
-
-                            # Margin (Tengo que fixear esto)
-                            ft.Divider(),
-
-                            # Icon and Level
-                            ProfileIconStack(
-                                icon_id=icon_id,
-                                summoner_lvl=summoner_lvl
-                            ),
-
-                            # Name and Tagline
-                            ft.Column(
-                                controls=[
-
-                                    # Name
-                                    ft.Text(
-                                        value=f"{summoner_name.split('#')[0]}",
-                                        size=30,
-                                        weight=ft.FontWeight.BOLD,
-                                    ),
-
-                                    # Tagline
-                                    ft.Text(
-                                        value=f"#{summoner_name.split('#')[1]}",
-                                    ),
-                                ],
-                            ),
-                        ]
+                    HeaderDetails(
+                        icon_id=icon_id,
+                        summoner_lvl=summoner_lvl,
+                        summoner_name=summoner_name,
                     )
                 ]
             )
@@ -134,5 +107,47 @@ class ProfileIconStack(ft.Stack):
                 alignment=ft.alignment.center,
                 right=20,
                 bottom=0,
+            ),
+        ]
+
+
+class HeaderDetails(ft.Row):
+    def __init__(
+
+        self,
+        icon_id,
+        summoner_lvl,
+        summoner_name,
+
+    ):
+        super().__init__()
+
+        self.alignment = ft.MainAxisAlignment.START
+        self.controls = [
+            # Margin
+            ft.Divider(),  # Tengo que fixear esto
+
+            # Icon and Level
+            ProfileIconStack(
+                icon_id=icon_id,
+                summoner_lvl=summoner_lvl
+            ),
+
+            # Name and Tagline
+            ft.Column(
+                controls=[
+
+                    # Name
+                    ft.Text(
+                        value=f"{summoner_name.split('#')[0]}",
+                        size=30,
+                        weight=ft.FontWeight.BOLD,
+                    ),
+
+                    # Tagline
+                    ft.Text(
+                        value=f"#{summoner_name.split('#')[1]}",
+                    ),
+                ],
             ),
         ]
