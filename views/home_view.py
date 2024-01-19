@@ -2,6 +2,7 @@ import flet as ft
 import time
 import requests
 
+from components import response
 from components.home_view.header_bar import HeaderBar
 from components.home_view.search_bar import SearchBar
 from utils import utils
@@ -10,7 +11,6 @@ from utils import utils
 class HomeView(ft.UserControl):
     def __init__(
         self,
-        page: ft.Page,
         route="/",
         icon=ft.icons.HOME,
         route_to="/profile",
@@ -18,12 +18,11 @@ class HomeView(ft.UserControl):
     ):
         super().__init__()
 
-        self.page = page
         self.icon = icon
         self.route_to = route_to
 
-        self._response = None
-
+        # TODO CAMBIAR ESTO CUANDO TERMINE EL DESARROLLO
+        self._response = response.RESPONSE
         self.summoner_name_textfield = ft.TextField(
             autocorrect=False,
             autofocus=False,
